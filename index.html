@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Brover - E-Commerce Template</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Top Navigation Header -->
+  <header class="header">
+    <div class="nav-left">
+      <a href="#" class="logo">Brover</a>
+      <div class="nav-location">
+        <span class="line-1">Deliver to</span>
+        <span class="line-2">Select Location</span>
+      </div>
+    </div>
+
+    <div class="nav-search">
+      <select class="search-category">
+        <option value="all">All</option>
+        <option value="electronics">Electronics</option>
+        <option value="fashion">Fashion</option>
+        <option value="home">Home</option>
+      </select>
+      <input type="text" id="search-input" placeholder="Search Brover">
+      <button class="search-btn" id="search-btn">🔍</button>
+    </div>
+
+    <div class="nav-right">
+      <div class="nav-item nav-account" id="open-auth">
+        <span class="line-1" id="account-line1">Hello, sign in</span>
+        <span class="line-2">Account & Lists</span>
+      </div>
+      <div class="nav-item">
+        <span class="line-1">Returns</span>
+        <span class="line-2">& Orders</span>
+      </div>
+      <div class="nav-cart" id="open-cart">
+        <span class="cart-icon">🛒</span>
+        <span id="cart-count">0</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Sub Navigation Bar -->
+  <nav class="sub-nav">
+    <div class="sub-nav-dropdown">
+      <a href="#" class="sub-nav-trigger">☰ All</a>
+      <div class="sub-nav-menu">
+        <a href="#">Electronics</a>
+        <a href="#">Fashion</a>
+        <a href="#">Home & Kitchen</a>
+        <a href="#">School Supplies</a>
+        <a href="#">Deals</a>
+      </div>
+    </div>
+    <a href="#">Today's Deals</a>
+    <a href="#">Customer Service</a>
+    <a href="#">Registry</a>
+    <a href="#">Gift Cards</a>
+    <a href="#">Sell</a>
+  </nav>
+
+  <!-- Main Content Wrapper -->
+  <main class="main-wrapper">
+    <!-- Hero Banner -->
+    <section class="hero-banner">
+      <div class="hero-content">
+        <h2>School Essentials at Every Price</h2>
+        <p>Shop back-to-school deals on top categories.</p>
+      </div>
+    </section>
+
+    <!-- Grid Section for Category Cards (4-Column Layout) -->
+    <section class="grid-categories">
+
+      <!-- Card 1: 2x2 Sub-Grid -->
+      <div class="card">
+        <h3>Shop Fashion for Less</h3>
+        <div class="quad-grid" id="fashion-grid"></div>
+        <a href="#" class="card-link">See more fashion</a>
+      </div>
+
+      <!-- Card 2: 2x2 Sub-Grid -->
+      <div class="card">
+        <h3>New Home Arrivals</h3>
+        <div class="quad-grid" id="home-grid"></div>
+        <a href="#" class="card-link">Shop latest from Home</a>
+      </div>
+
+      <!-- Card 3: Single Big Item -->
+      <div class="card">
+        <h3>Top Categories in Kitchen</h3>
+        <div class="single-item" id="kitchen-single"></div>
+        <a href="#" class="card-link">Explore all kitchen</a>
+      </div>
+
+      <!-- Card 4: 2x2 Sub-Grid -->
+      <div class="card">
+        <h3>School Supplies</h3>
+        <div class="quad-grid" id="school-grid"></div>
+        <a href="#" class="card-link">Shop school items</a>
+      </div>
+
+    </section>
+
+    <!-- Dynamic Horizontal Product Slider -->
+    <section class="slider-section">
+      <h2>Best Sellers in Electronics</h2>
+      <div class="product-slider" id="product-list">
+        <!-- Rendered by JavaScript -->
+      </div>
+    </section>
+  </main>
+
+  <!-- Slide-out Cart Drawer -->
+  <div class="cart-drawer" id="cart-drawer">
+    <div class="cart-header">
+      <h3>Your Shopping Cart</h3>
+      <button id="close-cart">✕</button>
+    </div>
+    <div class="cart-body" id="cart-items">
+      <p>Your cart is empty.</p>
+    </div>
+    <div class="cart-footer">
+      <div class="cart-total">Total: $<span id="cart-total-price">0.00</span></div>
+      <button class="checkout-btn" id="checkout-btn">Proceed to Checkout</button>
+    </div>
+  </div>
+  <div class="overlay" id="cart-overlay"></div>
+
+  <!-- Product Detail Modal -->
+  <div class="modal-backdrop" id="product-modal">
+    <div class="modal product-modal-box">
+      <button class="modal-close" data-close="product-modal">✕</button>
+      <div class="product-modal-content" id="product-modal-content">
+        <!-- Rendered by JavaScript -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Auth Modal -->
+  <div class="modal-backdrop" id="auth-modal">
+    <div class="modal auth-modal-box">
+      <button class="modal-close" data-close="auth-modal">✕</button>
+      <div class="auth-tabs">
+        <button class="auth-tab active" data-tab="signin">Sign In</button>
+        <button class="auth-tab" data-tab="register">Create Account</button>
+      </div>
+
+      <form class="auth-form active" id="signin-form" novalidate>
+        <h2>Sign In</h2>
+        <label for="signin-email">Email</label>
+        <input type="email" id="signin-email" placeholder="you@example.com">
+        <span class="field-error" id="signin-email-error"></span>
+
+        <label for="signin-password">Password</label>
+        <input type="password" id="signin-password" placeholder="Your password">
+        <span class="field-error" id="signin-password-error"></span>
+
+        <button type="submit" class="auth-submit-btn">Sign In</button>
+        <p class="auth-note">By continuing, you agree to Brover's Conditions of Use.</p>
+      </form>
+
+      <form class="auth-form" id="register-form" novalidate>
+        <h2>Create Account</h2>
+        <label for="register-name">Your Name</label>
+        <input type="text" id="register-name" placeholder="First and last name">
+        <span class="field-error" id="register-name-error"></span>
+
+        <label for="register-email">Email</label>
+        <input type="email" id="register-email" placeholder="you@example.com">
+        <span class="field-error" id="register-email-error"></span>
+
+        <label for="register-password">Password</label>
+        <input type="password" id="register-password" placeholder="At least 6 characters">
+        <span class="field-error" id="register-password-error"></span>
+
+        <button type="submit" class="auth-submit-btn">Create your Brover account</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Checkout Modal -->
+  <div class="modal-backdrop" id="checkout-modal">
+    <div class="modal checkout-modal-box">
+      <button class="modal-close" data-close="checkout-modal">✕</button>
+
+      <div class="checkout-steps">
+        <span class="step active" id="step-indicator-1">1. Shipping</span>
+        <span class="step" id="step-indicator-2">2. Payment</span>
+        <span class="step" id="step-indicator-3">3. Review</span>
+      </div>
+
+      <!-- Step 1: Shipping -->
+      <div class="checkout-step active" id="checkout-step-1">
+        <div class="checkout-main">
+          <h2>Shipping Address</h2>
+          <form id="shipping-form" novalidate>
+            <label for="ship-name">Full Name</label>
+            <input type="text" id="ship-name" placeholder="Full name">
+            <span class="field-error" id="ship-name-error"></span>
+
+            <label for="ship-address">Street Address</label>
+            <input type="text" id="ship-address" placeholder="Street address">
+            <span class="field-error" id="ship-address-error"></span>
+
+            <div class="form-row">
+              <div>
+                <label for="ship-city">City</label>
+                <input type="text" id="ship-city" placeholder="City">
+                <span class="field-error" id="ship-city-error"></span>
+              </div>
+              <div>
+                <label for="ship-zip">ZIP / Postal Code</label>
+                <input type="text" id="ship-zip" placeholder="ZIP code">
+                <span class="field-error" id="ship-zip-error"></span>
+              </div>
+            </div>
+
+            <label for="ship-phone">Phone Number</label>
+            <input type="text" id="ship-phone" placeholder="Phone number">
+            <span class="field-error" id="ship-phone-error"></span>
+
+            <button type="submit" class="checkout-next-btn">Continue to Payment</button>
+          </form>
+        </div>
+        <div class="checkout-summary" id="order-summary-1"></div>
+      </div>
+
+      <!-- Step 2: Payment -->
+      <div class="checkout-step" id="checkout-step-2">
+        <div class="checkout-main">
+          <h2>Payment Method</h2>
+          <form id="payment-form" novalidate>
+            <label for="card-name">Name on Card</label>
+            <input type="text" id="card-name" placeholder="Name on card">
+            <span class="field-error" id="card-name-error"></span>
+
+            <label for="card-number">Card Number</label>
+            <input type="text" id="card-number" placeholder="1234 5678 9012 3456" maxlength="19">
+            <span class="field-error" id="card-number-error"></span>
+
+            <div class="form-row">
+              <div>
+                <label for="card-expiry">Expiry (MM/YY)</label>
+                <input type="text" id="card-expiry" placeholder="MM/YY" maxlength="5">
+                <span class="field-error" id="card-expiry-error"></span>
+              </div>
+              <div>
+                <label for="card-cvv">CVV</label>
+                <input type="text" id="card-cvv" placeholder="123" maxlength="4">
+                <span class="field-error" id="card-cvv-error"></span>
+              </div>
+            </div>
+
+            <div class="checkout-btn-row">
+              <button type="button" class="checkout-back-btn" data-back="1">Back to Shipping</button>
+              <button type="submit" class="checkout-next-btn">Review Order</button>
+            </div>
+          </form>
+        </div>
+        <div class="checkout-summary" id="order-summary-2"></div>
+      </div>
+
+      <!-- Step 3: Review -->
+      <div class="checkout-step" id="checkout-step-3">
+        <div class="checkout-main">
+          <h2>Review Your Order</h2>
+          <div id="review-shipping" class="review-block"></div>
+          <div id="review-payment" class="review-block"></div>
+          <div class="checkout-btn-row">
+            <button type="button" class="checkout-back-btn" data-back="2">Back to Payment</button>
+            <button type="button" class="checkout-next-btn" id="place-order-btn">Place Order</button>
+          </div>
+        </div>
+        <div class="checkout-summary" id="order-summary-3"></div>
+      </div>
+
+      <!-- Step 4: Confirmation -->
+      <div class="checkout-step" id="checkout-step-4">
+        <div class="order-confirmation">
+          <div class="confirm-icon">✔</div>
+          <h2>Order Placed!</h2>
+          <p>Thanks for shopping with Brover. A confirmation has been sent to your email.</p>
+          <p class="order-id" id="order-id-display"></p>
+          <button type="button" class="checkout-next-btn" id="confirm-close-btn">Continue Shopping</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <button class="back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">Back to top</button>
+    <div class="footer-links">
+      <div>
+        <h4>Get to Know Us</h4>
+        <ul>
+          <li><a href="#">Careers</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">About Brover</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Make Money with Us</h4>
+        <ul>
+          <li><a href="#">Sell products on Brover</a></li>
+          <li><a href="#">Become an Affiliate</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Payment Products</h4>
+        <ul>
+          <li><a href="#">Brover Business Card</a></li>
+          <li><a href="#">Shop with Points</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Let Us Help You</h4>
+        <ul>
+          <li><a href="#">Your Account</a></li>
+          <li><a href="#">Your Orders</a></li>
+          <li><a href="#">Shipping Rates & Policies</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
