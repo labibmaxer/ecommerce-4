@@ -42,6 +42,23 @@ function ph(label, w = 400, h = 400) {
   return `data:image/svg+xml,${encodeURIComponent(svg)}`;
 }
 
+// ===================== IMAGE FALLBACK =====================
+// If a hotlinked photo fails to load (network issue, moved file, etc.),
+// swap it for a generated placeholder instead of leaving a broken image icon.
+
+function attachImageFallbacks(root) {
+  root.querySelectorAll("img").forEach((img) => {
+    img.addEventListener(
+      "error",
+      () => {
+        img.onerror = null;
+        img.src = ph(img.alt || "Image", img.width || 400, img.height || 400);
+      },
+      { once: true }
+    );
+  });
+}
+
 // ===================== DATA =====================
 
 const products = [
@@ -49,7 +66,7 @@ const products = [
     id: 1,
     title: "Wireless Bluetooth Headphones",
     price: 49.99,
-    img: ph("Headphones", 400, 400),
+    img: "https://commons.wikimedia.org/wiki/Special:FilePath/File:JLab_Studio_Black_Headphones.jpg?width=500",
     rating: 4.3,
     reviewCount: 2148,
     description: "Enjoy rich, immersive sound with these over-ear wireless headphones. Featuring up to 30 hours of battery life, active noise cancellation, and a foldable design for easy travel.",
@@ -65,7 +82,7 @@ const products = [
     id: 2,
     title: "Mechanical Gaming Keyboard",
     price: 89.99,
-    img: ph("Keyboard", 400, 400),
+    img: "https://commons.wikimedia.org/wiki/Special:FilePath/File:Lingbao_JIGUANSHI_Mechanical_Gaming_Keyboard.jpg?width=500",
     rating: 4.6,
     reviewCount: 973,
     description: "A responsive mechanical keyboard built for gaming and productivity, with per-key RGB lighting and durable switches rated for 50 million keystrokes.",
@@ -81,7 +98,7 @@ const products = [
     id: 3,
     title: "Ergonomic Optical Mouse",
     price: 24.99,
-    img: ph("Mouse", 400, 400),
+    img: "https://commons.wikimedia.org/wiki/Special:FilePath/File:Red_aopen_computer_optical_mouse.jpg?width=500",
     rating: 4.1,
     reviewCount: 512,
     description: "A comfortable ergonomic mouse designed to reduce wrist strain during long work sessions, with adjustable DPI settings for precision control.",
@@ -97,7 +114,7 @@ const products = [
     id: 4,
     title: "4K Ultra HD Monitor 27-inch",
     price: 299.99,
-    img: ph("Monitor", 400, 400),
+    img: "https://commons.wikimedia.org/wiki/Special:FilePath/File:Acer_AL1706_LCD_monitor.jpg?width=500",
     rating: 4.7,
     reviewCount: 1389,
     description: "A stunning 27-inch 4K UHD monitor with HDR support, perfect for creative work, gaming, and everyday productivity.",
@@ -113,7 +130,7 @@ const products = [
     id: 5,
     title: "USB-C Fast Charging Hub",
     price: 19.99,
-    img: ph("USB Hub", 400, 400),
+    img: "https://commons.wikimedia.org/wiki/Special:FilePath/File:USB_hub_Gembird.jpg?width=500",
     rating: 4.0,
     reviewCount: 764,
     description: "A compact 7-in-1 USB-C hub that expands your laptop's connectivity with HDMI, USB-A, SD card, and fast charging pass-through.",
@@ -129,19 +146,19 @@ const products = [
 
 // Category tiles reuse the same product-modal system with lightweight entries
 const categoryItems = [
-  { id: 101, title: "Jeans under $50", price: 39.99, img: ph("Jeans", 300, 300), rating: 4.2, reviewCount: 340, description: "Classic-fit denim jeans made from durable stretch cotton, built to last through every season.", bullets: ["Stretch denim for all-day comfort", "Reinforced stitching at stress points", "Machine washable", "Available in multiple washes"] },
-  { id: 102, title: "Tops under $25", price: 18.5, img: ph("Tops", 300, 300), rating: 4.0, reviewCount: 210, description: "Soft, breathable everyday tops in a range of colors, perfect for layering or wearing on their own.", bullets: ["Lightweight breathable fabric", "Pre-shrunk cotton blend", "Machine washable", "Available in 6 colors"] },
-  { id: 103, title: "Dresses", price: 34.99, img: ph("Dresses", 300, 300), rating: 4.4, reviewCount: 502, description: "Flattering everyday dresses designed for comfort without sacrificing style.", bullets: ["Flowy, breathable fabric", "Adjustable waist tie", "Machine washable", "True to size fit"] },
-  { id: 104, title: "Shoes", price: 44.99, img: ph("Shoes", 300, 300), rating: 4.3, reviewCount: 890, description: "Comfortable everyday sneakers with cushioned soles, built for walking and light exercise.", bullets: ["Cushioned memory-foam insole", "Breathable mesh upper", "Non-slip rubber outsole", "Lightweight design"] },
-  { id: 105, title: "Kitchen & Dining", price: 27.99, img: ph("Kitchen", 300, 300), rating: 4.5, reviewCount: 623, description: "Essential kitchen and dining accessories to upgrade your everyday cooking and mealtime setup.", bullets: ["Dishwasher-safe materials", "Space-saving design", "Durable, food-safe construction", "Easy to clean"] },
-  { id: 106, title: "Home Decor", price: 22.0, img: ph("Decor", 300, 300), rating: 4.2, reviewCount: 275, description: "Stylish decor pieces to refresh any room, from minimalist accents to statement pieces.", bullets: ["Lightweight, easy to hang or place", "Neutral tones fit most interiors", "Durable materials", "Simple assembly"] },
-  { id: 107, title: "Bedding & Bath", price: 54.99, img: ph("Bedding", 300, 300), rating: 4.4, reviewCount: 812, description: "Soft, breathable bedding and bath essentials for a comfortable, cozy home.", bullets: ["Brushed microfiber fabric", "Fade-resistant colors", "Machine washable", "Fits standard mattress sizes"] },
-  { id: 108, title: "Lighting", price: 29.99, img: ph("Lighting", 300, 300), rating: 4.1, reviewCount: 198, description: "Modern lighting fixtures that bring warmth and ambiance to any space.", bullets: ["Energy-efficient LED compatible", "Dimmable brightness control", "Easy tool-free installation", "Modern minimalist design"] },
-  { id: 109, title: "Cookers & Appliances", price: 129.99, img: ph("Cookers", 500, 400), rating: 4.6, reviewCount: 1042, description: "Reliable kitchen appliances built to make everyday cooking faster and easier.", bullets: ["Multiple cooking presets", "Easy-clean non-stick interior", "Compact countertop footprint", "1-year limited warranty"] },
-  { id: 110, title: "Backpacks", price: 32.99, img: ph("Backpacks", 300, 300), rating: 4.5, reviewCount: 654, description: "Durable, spacious backpacks built for school, work, or travel.", bullets: ["Padded laptop compartment", "Water-resistant fabric", "Ergonomic padded straps", "Multiple organizer pockets"] },
-  { id: 111, title: "Electronics", price: 15.99, img: ph("Electronics", 300, 300), rating: 4.0, reviewCount: 320, description: "Handy electronics accessories to keep you charged and connected on the go.", bullets: ["Compact and portable", "Compatible with most devices", "Durable braided cables", "1-year warranty"] },
-  { id: 112, title: "Notebooks", price: 8.99, img: ph("Notebooks", 300, 300), rating: 4.3, reviewCount: 410, description: "High-quality notebooks with smooth, bleed-resistant paper for writing or sketching.", bullets: ["120 lined pages", "Durable hardcover", "Elastic closure band", "Ribbon bookmark"] },
-  { id: 113, title: "Stationery", price: 6.5, img: ph("Stationery", 300, 300), rating: 4.1, reviewCount: 187, description: "A well-rounded stationery set covering all your everyday writing needs.", bullets: ["Includes pens, pencils, and erasers", "Smooth, smudge-resistant ink", "Compact carrying case", "Great for school or office"] }
+  { id: 101, title: "Jeans under $50", price: 39.99, img: "https://commons.wikimedia.org/wiki/Special:FilePath/File:Jeans.jpg?width=400", rating: 4.2, reviewCount: 340, description: "Classic-fit denim jeans made from durable stretch cotton, built to last through every season.", bullets: ["Stretch denim for all-day comfort", "Reinforced stitching at stress points", "Machine washable", "Available in multiple washes"] },
+  { id: 102, title: "Tops under $25", price: 18.5, img: "https://commons.wikimedia.org/wiki/Special:FilePath/File:Grey_Tshirt.jpg?width=400", rating: 4.0, reviewCount: 210, description: "Soft, breathable everyday tops in a range of colors, perfect for layering or wearing on their own.", bullets: ["Lightweight breathable fabric", "Pre-shrunk cotton blend", "Machine washable", "Available in 6 colors"] },
+  { id: 103, title: "Dresses", price: 34.99, img: "https://commons.wikimedia.org/wiki/Special:FilePath/File:Blue_and_Green_Evening_Dresses_with_Lace_and_Beading.jpg?width=400", rating: 4.4, reviewCount: 502, description: "Flattering everyday dresses designed for comfort without sacrificing style.", bullets: ["Flowy, breathable fabric", "Adjustable waist tie", "Machine washable", "True to size fit"] },
+  { id: 104, title: "Shoes", price: 44.99, img: "https://commons.wikimedia.org/wiki/Special:FilePath/File:On_Cloud_Running_Shoes.jpg?width=400", rating: 4.3, reviewCount: 890, description: "Comfortable everyday sneakers with cushioned soles, built for walking and light exercise.", bullets: ["Cushioned memory-foam insole", "Breathable mesh upper", "Non-slip rubber outsole", "Lightweight design"] },
+  { id: 105, title: "Kitchen & Dining", price: 27.99, img: "https://commons.wikimedia.org/wiki/Special:FilePath/File:Kitchen_utensils-01.jpg?width=400", rating: 4.5, reviewCount: 623, description: "Essential kitchen and dining accessories to upgrade your everyday cooking and mealtime setup.", bullets: ["Dishwasher-safe materials", "Space-saving design", "Durable, food-safe construction", "Easy to clean"] },
+  { id: 106, title: "Home Decor", price: 22.0, img: "https://commons.wikimedia.org/wiki/Special:FilePath/File:Interior_design_865875.jpg?width=400", rating: 4.2, reviewCount: 275, description: "Stylish decor pieces to refresh any room, from minimalist accents to statement pieces.", bullets: ["Lightweight, easy to hang or place", "Neutral tones fit most interiors", "Durable materials", "Simple assembly"] },
+  { id: 107, title: "Bedding & Bath", price: 54.99, img: "https://commons.wikimedia.org/wiki/Special:FilePath/File:Bed_in_Seattle_hotel.jpg?width=400", rating: 4.4, reviewCount: 812, description: "Soft, breathable bedding and bath essentials for a comfortable, cozy home.", bullets: ["Brushed microfiber fabric", "Fade-resistant colors", "Machine washable", "Fits standard mattress sizes"] },
+  { id: 108, title: "Lighting", price: 29.99, img: "https://commons.wikimedia.org/wiki/Special:FilePath/File:ORGEL_table_lamp.jpg?width=400", rating: 4.1, reviewCount: 198, description: "Modern lighting fixtures that bring warmth and ambiance to any space.", bullets: ["Energy-efficient LED compatible", "Dimmable brightness control", "Easy tool-free installation", "Modern minimalist design"] },
+  { id: 109, title: "Cookers & Appliances", price: 129.99, img: "https://commons.wikimedia.org/wiki/Special:FilePath/File:Rice-cooker.jpg?width=500", rating: 4.6, reviewCount: 1042, description: "Reliable kitchen appliances built to make everyday cooking faster and easier.", bullets: ["Multiple cooking presets", "Easy-clean non-stick interior", "Compact countertop footprint", "1-year limited warranty"] },
+  { id: 110, title: "Backpacks", price: 32.99, img: "https://commons.wikimedia.org/wiki/Special:FilePath/File:School_bag_backpack.jpg?width=400", rating: 4.5, reviewCount: 654, description: "Durable, spacious backpacks built for school, work, or travel.", bullets: ["Padded laptop compartment", "Water-resistant fabric", "Ergonomic padded straps", "Multiple organizer pockets"] },
+  { id: 111, title: "Electronics", price: 15.99, img: "https://commons.wikimedia.org/wiki/Special:FilePath/File:Nokia_mobile_phone_USB_charging_cable_-_20130310.jpg?width=400", rating: 4.0, reviewCount: 320, description: "Handy electronics accessories to keep you charged and connected on the go.", bullets: ["Compact and portable", "Compatible with most devices", "Durable braided cables", "1-year warranty"] },
+  { id: 112, title: "Notebooks", price: 8.99, img: "https://commons.wikimedia.org/wiki/Special:FilePath/File:Blank_Notebook.jpg?width=400", rating: 4.3, reviewCount: 410, description: "High-quality notebooks with smooth, bleed-resistant paper for writing or sketching.", bullets: ["120 lined pages", "Durable hardcover", "Elastic closure band", "Ribbon bookmark"] },
+  { id: 113, title: "Stationery", price: 6.5, img: "https://commons.wikimedia.org/wiki/Special:FilePath/File:Colored_pencils_-_painting_brushes_-_watercolors_-_mechanical_pencils_-_colored_markers.jpg?width=400", rating: 4.1, reviewCount: 187, description: "A well-rounded stationery set covering all your everyday writing needs.", bullets: ["Includes pens, pencils, and erasers", "Smooth, smudge-resistant ink", "Compact carrying case", "Great for school or office"] }
 ];
 
 const allItems = [...products, ...categoryItems];
@@ -185,6 +202,7 @@ function renderProducts() {
   `
     )
     .join("");
+  attachImageFallbacks(container);
 }
 
 function renderCategoryGrids() {
@@ -207,6 +225,7 @@ function renderCategoryGrids() {
       `;
       })
       .join("");
+    attachImageFallbacks(el);
   });
 
   const kitchen = findItem(109);
@@ -216,6 +235,7 @@ function renderCategoryGrids() {
       <span>${escapeHtml(kitchen.title)}</span>
     </div>
   `;
+  attachImageFallbacks(document.getElementById("kitchen-single"));
 }
 
 function renderStars(rating) {
@@ -302,6 +322,7 @@ function openProductModal(id) {
       <button class="buy-now-btn" id="modal-buy-now">Buy Now</button>
     </div>
   `;
+  attachImageFallbacks(content);
 
   const qtySelect = content.querySelector("#modal-qty");
   const totalEl = content.querySelector("#modal-total");
@@ -431,6 +452,7 @@ function updateCartUI() {
     `;
     })
     .join("");
+  attachImageFallbacks(cartBody);
 
   totalPriceElement.innerText = cartTotal().toFixed(2);
 }
