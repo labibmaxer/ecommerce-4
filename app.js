@@ -201,7 +201,7 @@ function renderCategoryGrids() {
         const item = findItem(id);
         return `
         <div class="quad-item" data-id="${item.id}" tabindex="0">
-          <div class="img-box" style="background-image:url('${item.img}')"></div>
+          <div class="img-box"><img src="${item.img}" alt="${escapeHtml(item.title)}"></div>
           <span>${escapeHtml(item.title)}</span>
         </div>
       `;
@@ -212,7 +212,7 @@ function renderCategoryGrids() {
   const kitchen = findItem(109);
   document.getElementById("kitchen-single").outerHTML = `
     <div class="single-item" id="kitchen-single" data-id="${kitchen.id}" tabindex="0">
-      <div class="img-box single-img" style="background-image:url('${kitchen.img}')"></div>
+      <div class="img-box single-img"><img src="${kitchen.img}" alt="${escapeHtml(kitchen.title)}"></div>
       <span>${escapeHtml(kitchen.title)}</span>
     </div>
   `;

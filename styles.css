@@ -243,17 +243,22 @@ body.no-scroll {
 
 .img-box {
   background-color: #dedede;
-  background-size: cover;
-  background-position: center;
   height: 100px;
   margin-bottom: 4px;
   overflow: hidden;
   border-radius: 4px;
+}
+
+.img-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
   transition: transform 0.3s ease;
 }
 
-.quad-item:hover .img-box,
-.single-item:hover .img-box {
+.quad-item:hover .img-box img,
+.single-item:hover .img-box img {
   transform: scale(1.06);
 }
 
