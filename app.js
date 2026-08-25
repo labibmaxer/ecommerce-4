@@ -10,8 +10,13 @@ function phColor(seed) {
   return PH_COLORS[hash % PH_COLORS.length];
 }
 
+function phEscapeXml(str) {
+  return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}
+
 function ph(label, w = 400, h = 400) {
   const bg = phColor(label);
+  label = phEscapeXml(label);
   const fontSize = Math.max(14, Math.round(Math.min(w, h) / 12));
   const words = label.split(" ");
   const lines = [];
@@ -30,15 +35,11 @@ function ph(label, w = 400, h = 400) {
   const lineHeight = fontSize * 1.3;
   const startY = h / 2 - ((lines.length - 1) * lineHeight) / 2;
   const textEls = lines
-    .map(
-      (l, i) =>
-        `<text x="50%" y="${startY + i * lineHeight}" font-size="${fontSize}" fill="#ffffff" font-family="Arial, sans-serif" font-weight="bold" text-anchor="middle" dominant-baseline="middle">${l}</text>`
-    )
+    .map((l, i) => `<text x="50%" y="${startY + i * lineHeight}" font-size="${fontSize}" fill="#ffffff" font-family="Arial, sans-serif" font-weight="bold" text-anchor="middle" dominant-baseline="middle">${l}</text>`)
     .join("");
 
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}"><rect width="100%" height="100%" fill="${bg}"/><g>${textEls}</g></svg>`;
-
-  return `data:image/svg+xml;base64,${btoa(unescape(encodeURIComponent(svg)))}`;
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}"><rect width="100%" height="100%" fill="${bg}"/>${textEls}</svg>`;
+  return `data:image/svg+xml,${encodeURIComponent(svg)}`;
 }
 
 // ===================== DATA =====================
